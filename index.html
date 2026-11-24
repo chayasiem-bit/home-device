@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Home Device Setup Guide</title>
+<meta name="description" content="A plain-language, step-by-step guide to installing and setting up Home Device on a phone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&family=Spline+Sans+Mono:wght@500&display=swap">
+<style>
+  /* Layout: one calm column of big numbered step-cards, read top to bottom on a phone. */
+  :root{
+    --bg:#f3f5f2; --surface:#ffffff; --surface-2:#eef1ed;
+    --fg:#17262b; --muted:#56686d; --line:#e0e5e0;
+    --accent:#0e7c74; --accent-strong:#0a5a54; --accent-fg:#ffffff;
+    --warn:#8a5500; --warn-bg:#fdf1d7; --warn-line:#eccf8c;
+    --danger:#9e2a20; --danger-bg:#fbe7e4; --danger-line:#eeb7b0;
+    --ok:#1d7a42; --ok-bg:#e3f3e8; --ok-line:#bde2c8;
+    --font-display:"Bricolage Grotesque",system-ui,sans-serif;
+    --font-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --font-mono:"Spline Sans Mono",ui-monospace,monospace;
+    --maxw:640px;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#101614; --surface:#18211e; --surface-2:#1f2a26;
+    --fg:#e9efe9; --muted:#a2b2ad; --line:#293330;
+    --accent:#51d2c5; --accent-strong:#8fe6dc; --accent-fg:#052420;
+    --warn:#f2c76a; --warn-bg:#2c2311; --warn-line:#4a3a19;
+    --danger:#f1a79e; --danger-bg:#301614; --danger-line:#4d231f;
+    --ok:#85d99f; --ok-bg:#112a1b; --ok-line:#20422c;
+    color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#101614; --surface:#18211e; --surface-2:#1f2a26;
+    --fg:#e9efe9; --muted:#a2b2ad; --line:#293330;
+    --accent:#51d2c5; --accent-strong:#8fe6dc; --accent-fg:#052420;
+    --warn:#f2c76a; --warn-bg:#2c2311; --warn-line:#4a3a19;
+    --danger:#f1a79e; --danger-bg:#301614; --danger-line:#4d231f;
+    --ok:#85d99f; --ok-bg:#112a1b; --ok-line:#20422c;
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+  body{background:var(--bg);color:var(--fg);font-family:var(--font-body);
+    font-size:17px;line-height:1.6;-webkit-text-size-adjust:100%;
+    padding-block:env(safe-area-inset-top,0px) env(safe-area-inset-bottom,0px)}
+  .wrap{max-width:var(--maxw);margin-inline:auto;
+    padding-left:max(18px,env(safe-area-inset-left,0px));
+    padding-right:max(18px,env(safe-area-inset-right,0px));
+    padding-block:0}
+  h1,h2,h3{font-family:var(--font-display);line-height:1.15;text-wrap:balance;margin:0}
+  p{margin:0}
+  a{color:var(--accent-strong)}
+  .ico{width:1.15em;height:1.15em;flex:none;vertical-align:-0.15em}
+
+  .hero{padding-block:40px 20px}
+  .kicker{font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent-strong);margin-bottom:14px}
+  h1{font-size:clamp(30px,8vw,46px);font-weight:800;letter-spacing:-.02em}
+  .lede{color:var(--muted);font-size:18px;margin-top:12px;max-width:38ch}
+
+  .what{display:flex;flex-direction:column;gap:12px;margin-top:22px}
+  .what div{display:flex;gap:12px;align-items:flex-start}
+  .what .ico{color:var(--accent);margin-top:.18em}
+
+  section{padding-block:18px}
+  .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  h2{font-size:26px;font-weight:700;letter-spacing:-.01em}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px}
+
+  .note{border-radius:14px;padding:16px 18px;display:flex;gap:12px;align-items:flex-start;
+    border:1px solid;font-size:16px}
+  .note .ico{margin-top:.15em}
+  .note h3{font-size:16px;margin-bottom:4px;font-family:var(--font-body);font-weight:700}
+  .note.danger{background:var(--danger-bg);border-color:var(--danger-line);color:var(--danger)}
+  .note.warn{background:var(--warn-bg);border-color:var(--warn-line);color:var(--warn)}
+  .note.ok{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok)}
+  .note.danger h3,.note.warn h3,.note.ok h3{color:inherit}
+  .note b{color:inherit}
+
+  ul.check{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+  ul.check li{display:flex;gap:12px;align-items:flex-start}
+  ul.check .ico{color:var(--accent);margin-top:.2em}
+
+  .terms{display:flex;flex-direction:column;gap:2px}
+  .terms div{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .terms div:last-child{border-bottom:0}
+  .terms dt{font-weight:700;min-width:120px}
+  .terms dd{margin:0;color:var(--muted);flex:1;min-width:0}
+
+  .ways{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+  @media (max-width:520px){.ways{grid-template-columns:1fr}}
+  .way h3{font-size:18px;margin-bottom:6px}
+  .way p{color:var(--muted);font-size:15px}
+  .tag{display:inline-block;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;
+    text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-bottom:10px}
+  .tag.easy{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-line)}
+  .tag.std{background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+
+  .steps{display:flex;flex-direction:column;gap:16px;counter-reset:step}
+  .step{background:var(--surface);border:1px solid var(--line);border-radius:18px;
+    padding:20px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+  .num{counter-increment:step;width:44px;height:44px;border-radius:50%;flex:none;
+    background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;
+    font-family:var(--font-display);font-weight:800;font-size:20px}
+  .num::before{content:counter(step)}
+  .step-body{min-width:0}
+  .step h3{font-size:20px;font-weight:700;margin-bottom:4px}
+  .step .goal{color:var(--muted);font-size:15px;margin-bottom:12px}
+  .todo{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+  .todo li{display:flex;gap:10px;align-items:flex-start}
+  .todo .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;margin-top:.55em}
+  .path{font-family:var(--font-mono);font-size:14px;background:var(--surface-2);
+    border:1px solid var(--line);border-radius:7px;padding:1px 6px;white-space:nowrap}
+  .seen{margin-top:12px;font-size:15px;color:var(--muted);display:flex;gap:10px;align-items:flex-start}
+  .seen .ico{color:var(--muted);margin-top:.15em}
+
+  .linkbox{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+  .url{flex:1;min-width:0;font-family:var(--font-mono);font-size:13px;background:var(--surface-2);
+    border:1px solid var(--line);border-radius:9px;padding:11px 12px;overflow-x:auto;white-space:nowrap}
+  button.copy{font-family:var(--font-body);font-weight:600;font-size:15px;cursor:pointer;
+    background:var(--accent);color:var(--accent-fg);border:0;border-radius:9px;padding:11px 16px}
+  button.copy:active{transform:translateY(1px)}
+
+  .illus{margin-top:14px;display:flex;justify-content:center}
+  .illus svg{max-width:100%;height:auto}
+
+  details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0;overflow:hidden}
+  details+details{margin-top:10px}
+  summary{cursor:pointer;padding:15px 18px;font-weight:600;list-style:none;display:flex;
+    justify-content:space-between;gap:12px;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-family:var(--font-mono);color:var(--accent);font-size:20px;flex:none}
+  details[open] summary::after{content:"–"}
+  details .ans{padding:0 18px 16px;color:var(--muted)}
+  details .ans .path{color:var(--fg)}
+
+  footer{padding-block:28px 48px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);margin-top:24px}
+
+  :where(a,button,summary):focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:6px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14-4.5L4 8"/><path d="M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14 4.5L20 16"/><path d="M20 20v-4h-4"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 22 20H2Z"/><line x1="12" y1="9.5" x2="12" y2="14"/><circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 10 18 20 6"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="4.5"/><path d="m11 11 9 9"/><path d="m16 16 2.5-2.5"/><path d="m19 19 2-2"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Phone setup · plain-language guide</div>
+    <h1>Setting up Home Device</h1>
+    <p class="lede">A step-by-step guide to turning off the Google Play Store on a phone — and keeping it off. No experience needed.</p>
+
+    <div class="what">
+      <div><svg class="ico"><use href="#i-block"/></svg><span><b>No more new apps.</b> The Play Store is removed, so nothing new can be installed.</span></div>
+      <div><svg class="ico"><use href="#i-lock"/></svg><span><b>It stays that way.</b> The settings are locked so they can’t be switched back on from the phone.</span></div>
+      <div><svg class="ico"><use href="#i-refresh"/></svg><span><b>Apps still get updates.</b> The apps already on the phone can be kept up to date without the store.</span></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="note danger">
+      <svg class="ico"><use href="#i-warn"/></svg>
+      <div>
+        <h3>This is meant to be permanent</h3>
+        <p>Once it’s set up, the app store cannot be switched back on from the phone itself. Only a person who knows the <b>operator passphrase</b> can undo it (see the last section). Make sure that’s what you want before you start.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Before you start</div>
+    <div class="card">
+      <ul class="check">
+        <li><svg class="ico"><use href="#i-check"/></svg><span>The phone, charged, with <b>Wi-Fi turned on</b> and connected.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span>About <b>20 quiet minutes</b>.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span>The <b>Google account email and password</b> used on the phone (you’ll sign out and back in).</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span>The <b>app file</b> and the <b>operator passphrase</b> from whoever gave you this guide. (Getting the file onto the phone is Step&nbsp;1 — no browser needed.)</span></li>
+      </ul>
+      <div class="note warn" style="margin-top:16px">
+        <svg class="ico"><use href="#i-warn"/></svg>
+        <div><p>Part-way through you’ll <b>sign out of your accounts</b> for a few minutes. Nothing is deleted — you add them back at the end.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">A few new words</div>
+    <div class="card terms">
+      <div><dt>App file</dt><dd>Also called an <b>APK</b>. It’s just an Android app saved as a file, so you can install it without the store.</dd></div>
+      <div><dt>Settings</dt><dd>The phone’s own options screen — the gear icon.</dd></div>
+      <div><dt>Developer options</dt><dd>An extra menu that’s hidden until you unlock it. Step 3 shows how.</dd></div>
+      <div><dt>Manager mode</dt><dd>What Home Device switches into so it’s allowed to control the phone. Its proper name is “Device Owner.”</dd></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Two ways to set up</div>
+    <div class="ways">
+      <div class="card way">
+        <span class="tag easy">Easiest</span>
+        <h3>Brand-new or reset phone</h3>
+        <p>On the very first welcome screen, tap the screen 6 times and scan the QR code your setup person gives you. The phone does the rest. Then skip to <b>Step 7</b>.</p>
+      </div>
+      <div class="card way">
+        <span class="tag std">Most phones</span>
+        <h3>A phone already in use</h3>
+        <p>Follow Steps 1–8 below. It takes a little longer but doesn’t erase anything on the phone.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Step by step · phone already in use</div>
+    <div class="steps">
+
+      <div class="step">
+        <div class="num"></div>
+        <div class="step-body">
+          <h3>Get the app file onto the phone</h3>
+          <p class="goal">No web browser is needed on the phone. You get the <b>app file</b> (its name ends in <span class="path">.apk</span>), copy it onto the phone, and install it.</p>
+          <p style="color:var(--muted);font-size:15px;margin-bottom:8px">On a computer, download the app file from this link, then move it to the phone with one of the ways below:</p>
+          <div class="linkbox"><span class="url">https://github.com/chayasiem-bit/home-device/releases/latest/download/home-device.apk</span></div>
+          <p style="color:var(--muted);font-size:15px;margin:14px 0 10px">Ways to get the file onto the phone:</p>
+          <ul class="todo">
+            <li><span class="dot"></span><span><b>Bluetooth</b> — pair the phone with a computer or another phone and send the file.</span></li>
+            <li><span class="dot"></span><span><b>Nearby Share / Quick Share</b> — send it from another Android phone.</span></li>
+            <li><span class="dot"></span><span><b>microSD card</b> — put the file on a card using a computer, then slot the card into the phone.</span></li>
+            <li><span class="dot"></span><span><b>USB cable</b> — plug the phone into a computer, pick <b>File transfer</b> on the phone, and copy the file over.</span></li>
+          </ul>
+          <p style="color:var(--muted);font-size:15px;margin:14px 0 10px">Then install it:</p>
+          <ul class="todo">
+            <li><span class="dot"></span><span>Open the <b>Files</b> app, go to where the file landed (often <span class="path">Downloads</span>, <span class="path">Bluetooth</span>, or the SD card), and <b>tap the file</b>.</span></li>
+            <li><span class="dot"></span><span>If it says installing is blocked, tap <b>Settings</b> on the pop-up, turn on <b>Allow from this source</b>, go back, and tap <b>Install</b>.</span></li>
+            <li><span class="dot"></span><span>If it warns “this file can harm your device,” that’s normal for any app from outside the store. Tap <b>Install anyway</b> / <b>OK</b>.</span></li>
+          </ul>
+          <div class="seen"><svg class="ico"><use href="#i-eye"/></svg><span>Don’t have the file yet? Ask your setup person to send it by Bluetooth, Nearby Share, or on an SD card — it’s one file ending in <span class="path">.apk</span>.</span></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num"></div>
+        <div class="step-body">
+          <h3>Sign out of your accounts</h3>
+          <p class="goal">The phone only hands control to the Blocker when no accounts are signed in. This is temporary.</p>
+          <ul class="todo">
+            <li><span class="dot"></span><span>Go to <span class="path">Settings › Accounts</span> (sometimes “Passwords &amp; accounts”).</span></li>
+            <li><span class="dot"></span><span>Tap each account and choose <b>Remove</b> — Google and any apps listed (WhatsApp and the like).</span></li>
+          </ul>
+          <div class="seen"><svg class="ico"><use href="#i-eye"/></svg><span>Nothing is deleted. You sign back in at Step 7.</span></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num"></div>
+        <div class="step-body">
+          <h3>Unlock the hidden menu</h3>
+          <p class="goal">Reveal “Developer options.”</p>
+          <ul class="todo">
+            <li><span class="dot"></span><span>Go to <span class="path">Settings › About phone</span>.</span></li>
+            <li><span class="dot"></span><span>Find <b>Build number</b> and tap it <b>7 times</b> quickly. A message says “You are now a developer.”</span></li>
+          </ul>
+          <div class="illus">
+            <svg viewBox="0 0 300 150" role="img" aria-label="Tapping Build number seven times on the About phone screen">
+              <rect x="70" y="8" width="160" height="134" rx="14" fill="var(--surface-2)" stroke="var(--line)"/>
+              <text x="88" y="38" font-family="var(--font-body)" font-size="11" fill="var(--muted)">About phone</text>
+              <line x1="86" y1="48" x2="214" y2="48" stroke="var(--line)"/>
+              <text x="88" y="72" font-family="var(--font-body)" font-size="12" fill="var(--fg)">Android version</text>
+              <text x="88" y="104" font-family="var(--font-body)" font-size="12" font-weight="700" fill="var(--accent-strong)">Build number</text>
+              <text x="88" y="120" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">tap 7&times;</text>
+              <circle cx="196" cy="100" r="15" fill="none" stroke="var(--accent)" stroke-width="2"/>
+              <circle cx="196" cy="100" r="5" fill="var(--accent)"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num"></div>
+        <div class="step-body">
+          <h3>Turn on Wireless debugging</h3>
+          <p class="goal">This lets the Blocker talk to the phone to set itself up.</p>
+          <ul class="todo">
+            <li><span class="dot"></span><span>Go to <span class="path">Settings › System › Developer options</span> (it’s there now).</span></li>
+            <li><span class="dot"></span><span>Turn on <b>Wireless debugging</b>. If it asks “Allow on this network?”, tap <b>Allow</b>.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num"></div>
+        <div class="step-body">
+          <h3>Open the Blocker and start setup</h3>
+          <p class="goal">Begin the guided connection.</p>
+          <ul class="todo">
+            <li><span class="dot"></span><span>Open the <b>Home Device</b> app.</span></li>
+            <li><span class="dot"></span><span>Tap <b>Set up (pair device)</b>.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num"></div>
+        <div class="step-body">
+          <h3>Connect it</h3>
+          <p class="goal">Link the app to the phone with a one-time code.</p>
+          <ul class="todo">
+            <li><span class="dot"></span><span>In the app, tap <b>Discover ports automatically</b>. The two number boxes should fill in by themselves.</span></li>
+            <li><span class="dot"></span><span>On the phone, in Wireless debugging, tap <b>Pair device with pairing code</b>. It shows a <b>6-digit code</b>.</span></li>
+            <li><span class="dot"></span><span>Type that code into the app and tap <b>Pair</b>, then tap <b>Activate device owner</b>.</span></li>
+          </ul>
+          <div class="note ok" style="margin-top:4px">
+            <svg class="ico"><use href="#i-check"/></svg>
+            <div><p>When it says <b>“Device Owner: active — Play Store blocked,”</b> it’s done and in charge.</p></div>
+          </div>
+          <div class="seen"><svg class="ico"><use href="#i-eye"/></svg><span><b>If the boxes didn’t fill in:</b> the pairing pop-up shows a number after a colon (like <span class="path">:37881</span>) — type it in the <b>Pairing port</b> box. After you pair, the main Wireless debugging screen shows another number after a colon — type it in the <b>Connect port</b> box.</span></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num"></div>
+        <div class="step-body">
+          <h3>Add your accounts back</h3>
+          <p class="goal">Put things back the way they were.</p>
+          <ul class="todo">
+            <li><span class="dot"></span><span>Go to <span class="path">Settings › Accounts › Add account</span>.</span></li>
+            <li><span class="dot"></span><span>Sign back into Google and any apps you removed.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num"></div>
+        <div class="step-body">
+          <h3>Check it worked</h3>
+          <p class="goal">Confirm the store is gone.</p>
+          <ul class="todo">
+            <li><span class="dot"></span><span>Open the phone’s list of apps.</span></li>
+            <li><span class="dot"></span><span>The <b>Play Store is gone</b>, and it can’t be reinstalled from the phone.</span></li>
+          </ul>
+          <div class="note ok" style="margin-top:4px">
+            <svg class="ico"><use href="#i-check"/></svg>
+            <div><p>That’s it — the phone is set up.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">If you ever need to undo it</div>
+    <div class="card">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <svg class="ico" style="color:var(--accent);margin-top:.15em"><use href="#i-key"/></svg>
+        <div>
+          <p>Open <b>Home Device</b>, tap <b>Release device (operator)</b>, type the <b>operator passphrase</b>, and tap <b>Release</b>. The lock lifts and the phone goes back to normal.</p>
+          <p style="color:var(--muted);font-size:15px;margin-top:8px">Without that passphrase it can’t be undone from the phone — that’s the point of it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">If something goes wrong</div>
+
+    <details>
+      <summary>It won’t let me install the app file</summary>
+      <div class="ans">When you open the file, tap <span class="path">Settings</span> on the pop-up, turn on <b>Allow from this source</b> (or “Install unknown apps”), go back, and tap <b>Install</b>.</div>
+    </details>
+    <details>
+      <summary>I can’t find “Developer options”</summary>
+      <div class="ans">It’s hidden until you unlock it. Go to <span class="path">Settings › About phone</span> and tap <b>Build number</b> 7 times (Step 3). Then it appears under <span class="path">Settings › System</span>.</div>
+    </details>
+    <details>
+      <summary>“Discover ports” didn’t fill in the boxes</summary>
+      <div class="ans">Type the numbers by hand. The pairing pop-up and the main Wireless debugging screen each show a number after a colon (like <span class="path">192.168.0.5:37881</span>) — use the part after the colon. See the note under Step 6.</div>
+    </details>
+    <details>
+      <summary>Will removing my accounts delete my photos or chats?</summary>
+      <div class="ans">No. Removing an account just signs you out. Your photos and files stay, and you sign back in at Step 7.</div>
+    </details>
+    <details>
+      <summary>How do I get the app file without a browser?</summary>
+      <div class="ans">You don’t download it on the phone. Your setup person sends you the file (it ends in <span class="path">.apk</span>) — by <b>Bluetooth</b>, <b>Nearby&nbsp;Share</b>, on a <b>microSD card</b>, or over a <b>USB cable</b> from a computer. Then open the <span class="path">Files</span> app and tap it (Step&nbsp;1).</div>
+    </details>
+    <details>
+      <summary>Can apps still be removed after setup?</summary>
+      <div class="ans">Yes. Removing apps is left switched on, so you can uninstall apps as normal. Only <b>Home Device</b> itself can’t be removed — and <b>no new apps</b> can be added, because the store is gone and installing from files is blocked.</div>
+    </details>
+    <details>
+      <summary>The pairing or activation step shows an error</summary>
+      <div class="ans">Check that you removed <b>all</b> accounts (Step 2) and that <b>Wi-Fi</b> and <b>Wireless debugging</b> are both on. Then close the app, open it again, and retry Step 6.</div>
+    </details>
+  </section>
+
+  <footer>
+    <p>Keep this guide handy in case you set up another phone. If you get stuck on any step, send your setup person a photo of what’s on the screen.</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
